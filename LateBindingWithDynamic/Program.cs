@@ -1,0 +1,68 @@
+﻿using System;
+using System.Reflection;
+
+namespace LateBindingWithDynamic
+{
+    namespace LateBindingWithDynamic
+    {
+        class Program
+        {
+            static void Main(string[] args)
+            {
+                Console.WriteLine("****** Late Binding With Dynamic ******");
+                Console.WriteLine();
+
+                AddWithReflection();
+                Console.WriteLine();
+
+                AddWithDynamic();
+                Console.WriteLine();
+            }
+
+            static void AddWithReflection()
+            {
+                Console.WriteLine("Used Reflection => ");
+
+                Assembly asm = Assembly.LoadFrom("c:\\Users\\Greed\\Desktop\\C# .NET\\DLR\\MathLibrary\\bin\\Debug\\net5.0\\MathLibrary.dll");
+
+                try
+                {
+                    Type upClass = asm.GetTypes()[0];
+
+                    object obj = asm.CreateInstance(upClass.FullName);
+
+                    MethodInfo method = upClass.GetMethod("Add");
+
+                    object[] args = { 10, 10 };
+
+                    Console.WriteLine($"{upClass.FullName}.{method.Name}(10, 10): {method.Invoke(obj, args)}");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+                
+            }
+
+            static void AddWithDynamic()
+            {
+                Console.WriteLine("Used Dynamic => ");
+
+                Assembly asm = Assembly.LoadFrom("c:\\Users\\Greed\\Desktop\\C# .NET\\DLR\\MathLibrary\\bin\\Debug\\net5.0\\MathLibrary.dll");
+
+                try
+                {
+                    string className= asm.GetTypes()[0].FullName;
+
+                    dynamic obj = asm.CreateInstance(className);
+
+                    Console.WriteLine($"{className}.Add(10, 10): {obj.Add(10, 10)}");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
+        }
+    }
+}
