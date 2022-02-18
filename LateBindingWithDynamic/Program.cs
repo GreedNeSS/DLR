@@ -9,21 +9,22 @@ namespace LateBindingWithDynamic
         {
             static void Main(string[] args)
             {
+                Assembly asm = Assembly.LoadFrom("c:\\Users\\Greed\\Desktop\\C# .NET\\DLR\\MathLibrary\\bin\\Debug\\net5.0\\MathLibrary.dll");
+
                 Console.WriteLine("****** Late Binding With Dynamic ******");
                 Console.WriteLine();
 
-                AddWithReflection();
+                AddWithReflection(asm);
                 Console.WriteLine();
 
-                AddWithDynamic();
+                AddWithDynamic(asm);
                 Console.WriteLine();
             }
 
-            static void AddWithReflection()
+            static void AddWithReflection(Assembly asm)
             {
                 Console.WriteLine("Used Reflection => ");
 
-                Assembly asm = Assembly.LoadFrom("c:\\Users\\Greed\\Desktop\\C# .NET\\DLR\\MathLibrary\\bin\\Debug\\net5.0\\MathLibrary.dll");
 
                 try
                 {
@@ -44,11 +45,9 @@ namespace LateBindingWithDynamic
                 
             }
 
-            static void AddWithDynamic()
+            static void AddWithDynamic(Assembly asm)
             {
                 Console.WriteLine("Used Dynamic => ");
-
-                Assembly asm = Assembly.LoadFrom("c:\\Users\\Greed\\Desktop\\C# .NET\\DLR\\MathLibrary\\bin\\Debug\\net5.0\\MathLibrary.dll");
 
                 try
                 {
